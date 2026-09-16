@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#ffd8e8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>15天假期轻盈打卡</title>
+  <style>
+    :root{
+      --bg:#fff7fa;
+      --card:#ffffff;
+      --paper:#fffdfd;
+      --pink:#f48fb7;
+      --pink-strong:#ea76a3;
+      --pink-soft:#ffe1ec;
+      --pink-softer:#fff1f6;
+      --pink-line:#f4d3e1;
+      --berry:#c05e83;
+      --brown:#7a5545;
+      --ink:#614d57;
+      --muted:#9d8692;
+      --sky:#bfe4ff;
+      --mint:#cfeccc;
+      --gold:#ffdd7b;
+      --shadow:0 10px 30px rgba(223,145,176,.14);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{
+      background:
+        linear-gradient(rgba(245,214,227,.40) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,214,227,.40) 1px, transparent 1px),
+        var(--bg);
+      background-size:26px 26px,26px 26px,auto;
+    }
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 8% 4%, rgba(255,226,236,.9), transparent 24%),
+        radial-gradient(circle at 94% 12%, rgba(255,238,245,.95), transparent 26%),
+        linear-gradient(rgba(245,214,227,.40) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,214,227,.40) 1px, transparent 1px),
+        var(--bg);
+      background-size:auto,auto,26px 26px,26px 26px,auto;
+    }
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{max-width:520px;margin:0 auto;min-height:100vh;padding:18px 14px 96px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px
+    }
+    .brand{font-weight:800;font-size:18px;letter-spacing:.2px;color:var(--berry)}
+    .pill{
+      border:2px solid var(--pink-line);background:rgba(255,255,255,.86);border-radius:999px;
+      padding:8px 12px;color:var(--berry);font-size:12px;box-shadow:0 4px 14px rgba(202,99,140,.08)
+    }
+
+    .hero{
+      position:relative;overflow:hidden;border:2px solid var(--pink-line);border-radius:30px;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(255,255,255,.7), transparent 14%),
+        radial-gradient(circle at 84% 14%, rgba(255,255,255,.6), transparent 12%),
+        linear-gradient(rgba(245,214,227,.42) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,214,227,.42) 1px, transparent 1px),
+        linear-gradient(180deg,#fffefef2 0%, #fff8fb 58%, #ffeff6 100%);
+      background-size:auto,auto,22px 22px,22px 22px,auto;
+      box-shadow:var(--shadow);
+      padding:18px 18px 16px;
+      margin-bottom:16px;
+      min-height:250px
+    }
+    .hero h1{
+      margin:0 0 8px;
+      font-size:30px;line-height:1.12;max-width:60%;
+      color:#f794bc;
+      font-weight:900;letter-spacing:.4px;
+      text-shadow:
+        -2px -2px 0 #ffffff,
+         2px -2px 0 #ffffff,
+        -2px  2px 0 #ffffff,
+         2px  2px 0 #ffffff,
+        -5px 0 0 #bfe4ff,
+         5px 0 0 #bfe4ff,
+         0 -5px 0 #bfe4ff,
+         0 5px 0 #bfe4ff,
+         0 2px 0 #eda8c2;
+    }
+    .hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.65;max-width:58%}
+    .hero .mini{
+      margin-top:12px;display:inline-flex;align-items:center;gap:7px;background:#fff;border:2px solid var(--pink-line);
+      border-radius:999px;padding:8px 11px;font-size:12px;font-weight:700;color:var(--berry)
+    }
+    .hero .sticker-row{
+      position:absolute;left:16px;top:10px;font-size:16px;color:#f3a8c6;display:flex;gap:8px
+    }
+    .hero .speech{
+      position:absolute;right:22px;top:142px;width:138px;
+      border:2px solid #d8a5b8;background:#ffe7f1;border-radius:24px;padding:11px 12px;
+      font-size:12px;line-height:1.6;color:#6d4a56;font-weight:700;text-align:center
+    }
+    .hero .speech::after{
+      content:"";position:absolute;left:16px;bottom:-12px;width:18px;height:18px;
+      background:#ffe7f1;border-left:2px solid #d8a5b8;border-bottom:2px solid #d8a5b8;transform:rotate(-35deg);
+      border-bottom-left-radius:6px
+    }
+    .hero-art{position:absolute;right:4px;bottom:44px;width:190px;height:180px}
+    .hero-cloud{position:absolute;left:0;right:0;bottom:-2px;height:72px;pointer-events:none}
+    .cups-strip{
+      position:relative;z-index:2;margin-top:18px;
+      border:2px dotted #efb6ca;background:rgba(255,255,255,.92);border-radius:22px;padding:8px 10px
+    }
+    .cups-title{
+      font-size:12px;color:var(--pink-strong);font-weight:900;display:flex;align-items:center;gap:6px;margin-bottom:6px
+    }
+    .cups{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px
+    }
+    .cup{display:flex;flex-direction:column;align-items:center;gap:4px}
+    .cup svg{width:100%;max-width:66px;height:54px}
+    .cup small{font-size:10px;color:var(--muted)}
+
+    .section-title{display:flex;align-items:flex-end;justify-content:space-between;margin:18px 4px 10px}
+    .section-title h2{font-size:17px;margin:0;color:var(--pink-strong)}
+    .section-title span{font-size:12px;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .stat{
+      background:var(--card);border:2px solid var(--pink-line);border-radius:20px;padding:14px 10px;text-align:center;
+      box-shadow:0 7px 20px rgba(202,99,140,.07)
+    }
+    .stat b{display:block;font-size:23px;color:var(--berry);margin-bottom:3px}
+    .stat small{font-size:11px;color:var(--muted)}
+    .route-wrap{overflow:auto;padding:4px 2px 10px;scrollbar-width:none}
+    .route-wrap::-webkit-scrollbar{display:none}
+    .route{display:flex;min-width:780px;align-items:center;padding:10px 2px}
+    .route-node{display:flex;align-items:center;flex:1;min-width:62px}
+    .route-line{height:4px;flex:1;background:var(--pink-soft);border-radius:999px}
+    .route-dot{
+      width:44px;height:44px;border-radius:50%;border:2px solid var(--pink-line);background:#fff;
+      display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--berry);position:relative;flex:none;
+      box-shadow:0 4px 10px rgba(228,151,183,.08)
+    }
+    .route-dot.done{background:linear-gradient(145deg,#ffb9d1,#f58bb3);color:#fff;border-color:#f58bb3}
+    .route-dot.active{box-shadow:0 0 0 6px rgba(245,139,179,.16)}
+    .route-dot::after{content:attr(data-d);position:absolute;top:49px;color:var(--muted);font-size:10px;font-weight:700;white-space:nowrap}
+    .calendar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .day-card{
+      border:2px solid var(--pink-line);background:#fff;border-radius:19px;padding:12px 10px;text-align:left;
+      min-height:100px;box-shadow:0 6px 18px rgba(202,99,140,.06);position:relative
+    }
+    .day-card .date{font-weight:800;font-size:14px;color:var(--berry)}
+    .day-card .pct{font-size:20px;color:var(--berry);font-weight:900;margin-top:9px}
+    .day-card .status{font-size:10px;color:var(--muted)}
+    .day-card .stamp{position:absolute;right:8px;top:8px;font-size:18px}
+    .page{display:none}
+    .page.active{display:block}
+    .daily-head{
+      position:sticky;top:0;z-index:10;background:rgba(255,247,250,.92);backdrop-filter:blur(14px);
+      padding:3px 0 10px;margin-bottom:10px
+    }
+    .date-switch{display:flex;align-items:center;gap:8px}
+    .date-switch button{
+      width:38px;height:38px;border-radius:50%;border:2px solid var(--pink-line);background:#fff;color:var(--berry)
+    }
+    .date-title{flex:1;text-align:center}
+    .date-title b{display:block;font-size:17px;color:var(--berry)}
+    .date-title span{font-size:11px;color:var(--muted)}
+    .score-card{
+      background:linear-gradient(145deg,#ffedf5,#fff);border:2px solid #f4dce6;border-radius:24px;padding:16px;
+      box-shadow:var(--shadow);margin:10px 0 14px
+    }
+    .score-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .score-num{font-size:34px;font-weight:900;color:var(--berry)}
+    .score-copy b{font-size:14px;color:var(--berry)}
+    .score-copy p{margin:4px 0 0;font-size:11px;color:var(--muted);line-height:1.45}
+    .bar{height:9px;background:#f8dde8;border-radius:999px;overflow:hidden;margin-top:12px}
+    .bar>i{display:block;height:100%;background:linear-gradient(90deg,#f7a5c4,#ec76a3);width:0%;border-radius:999px;transition:.25s}
+    .card{
+      background:#fff;border:2px solid #f4dbe5;border-radius:var(--radius);padding:15px;margin:12px 0;
+      box-shadow:0 7px 22px rgba(202,99,140,.06)
+    }
+    .card h3{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px;color:var(--pink-strong)}
+    .meal{border-top:1px dashed #f1d8e3;padding-top:13px;margin-top:13px}
+    .meal:first-of-type{border-top:0;padding-top:0;margin-top:0}
+    .meal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+    .meal-name{font-weight:800;font-size:14px;color:var(--brown)}
+    .toggle{
+      border:2px solid #f3dae4;background:var(--pink-softer);color:var(--berry);border-radius:999px;padding:7px 10px;
+      font-size:11px;font-weight:700
+    }
+    .toggle.on{background:var(--pink);border-color:var(--pink);color:#fff}
+    textarea{
+      width:100%;min-height:74px;resize:vertical;border:2px solid #f3dce6;border-radius:16px;padding:11px 12px;
+      outline:none;background:#fffafd;color:var(--ink);line-height:1.5
+    }
+    textarea:focus,input:focus{border-color:#efa0be;box-shadow:0 0 0 3px rgba(245,139,179,.10)}
+    .photo-row{display:flex;gap:10px;align-items:center;margin-top:9px}
+    .photo-btn{
+      border:2px dashed #e7abc0;background:#fff5f9;color:var(--berry);border-radius:14px;padding:9px 11px;font-size:11px;font-weight:700
+    }
+    .photo-preview{
+      width:56px;height:56px;border-radius:14px;object-fit:cover;border:2px solid #f3dbe5;display:none
+    }
+    .photo-remove{display:none;border:0;background:transparent;color:var(--muted);font-size:11px;padding:6px}
+    .checks{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .check{
+      border:2px solid #f4dce6;background:#fffafd;border-radius:16px;padding:12px;text-align:left;min-height:72px;
+      transition:.18s
+    }
+    .check.on{background:#ffe7f1;border-color:#f2acc6;transform:translateY(-1px)}
+    .check .emoji{font-size:20px;display:block;margin-bottom:5px}
+    .check b{font-size:12px;display:block;color:var(--brown)}
+    .check small{font-size:10px;color:var(--muted);line-height:1.35}
+    .water-box{display:flex;align-items:center;gap:12px}
+    .water-ring{
+      width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--pink) 0deg,#f8e0e9 0);
+      position:relative;flex:none
+    }
+    .water-ring::after{content:"";position:absolute;inset:8px;border-radius:50%;background:#fff}
+    .water-ring span{position:relative;z-index:1;font-weight:900;color:var(--berry);font-size:14px;text-align:center}
+    .water-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:1}
+    .water-actions button{border:2px solid #f2dbe5;background:#fff8fb;border-radius:13px;padding:10px 8px;color:var(--berry);font-weight:800;font-size:11px}
+    .pilates{
+      border:2px solid #f0bad0;background:linear-gradient(145deg,#fff2f8,#fff);border-radius:22px;padding:16px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px
+    }
+    .pilates.on{background:linear-gradient(145deg,#ffd5e5,#fff0f6)}
+    .pilates .left{display:flex;align-items:center;gap:11px}
+    .pilates-icon{width:48px;height:48px;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:24px;border:2px solid #f2dbe5}
+    .pilates b{font-size:14px;color:var(--brown)}
+    .pilates small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+    .spark{font-size:22px;filter:grayscale(1);opacity:.45}
+    .pilates.on .spark{filter:none;opacity:1}
+    .inline-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px dashed #f2dce5}
+    .inline-row:first-child{border-top:0;padding-top:0}
+    .inline-row:last-child{padding-bottom:0}
+    .inline-row label{font-size:12px;font-weight:700;color:var(--brown)}
+    .switch{width:48px;height:28px;border:0;background:#eadce2;border-radius:999px;position:relative}
+    .switch::after{content:"";width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .switch.on{background:var(--pink)}
+    .switch.on::after{left:23px}
+    .star-note{margin-top:10px;background:#fff9e9;border:2px solid #f5e3b4;border-radius:15px;padding:10px 12px;font-size:11px;color:#8d7342;display:none}
+    .star-note.show{display:block}
+    .private-weight{display:none}
+    .private-weight.show{display:block}
+    .weight-row{display:flex;align-items:center;gap:8px}
+    .weight-row input{
+      width:110px;border:2px solid #f3dce6;border-radius:13px;padding:10px;background:#fffafd;color:var(--ink)
+    }
+    .checkin-btn{
+      width:100%;border:0;border-radius:18px;padding:14px 16px;background:linear-gradient(135deg,#f58bb3,#ea70a0);
+      color:#fff;font-weight:900;box-shadow:0 9px 20px rgba(234,112,160,.22);margin-top:4px
+    }
+    .checkin-btn.done{background:#fff;border:2px solid #edb3c9;color:var(--berry);box-shadow:none}
+    .summary-hero{text-align:center;padding:18px 12px}
+    .summary-hero .big{font-size:46px;font-weight:950;color:var(--berry);line-height:1}
+    .summary-hero p{font-size:12px;color:var(--muted);margin:8px 0 0}
+    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .summary-item{background:#fff;border:2px solid #f4dbe5;border-radius:20px;padding:16px;text-align:center}
+    .summary-item b{display:block;font-size:25px;color:var(--berry)}
+    .summary-item span{font-size:11px;color:var(--muted)}
+    .empty-note{font-size:12px;color:var(--muted);text-align:center;padding:18px 8px}
+    .bottom-nav{
+      position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(520px,100%);
+      background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-top:2px solid #f1d8e3;
+      display:grid;grid-template-columns:repeat(3,1fr);padding:9px 14px calc(9px + env(safe-area-inset-bottom));z-index:50
+    }
+    .nav-btn{border:0;background:transparent;color:var(--muted);font-size:11px;padding:5px 4px}
+    .nav-btn span{display:block;font-size:20px;margin-bottom:2px}
+    .nav-btn.active{color:var(--berry);font-weight:800}
+    .toast{
+      position:fixed;left:50%;bottom:86px;transform:translate(-50%,20px);background:#5b4650;color:#fff;padding:10px 14px;
+      border-radius:999px;font-size:11px;opacity:0;pointer-events:none;transition:.2s;z-index:99
+    }
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .tiny{font-size:10px;color:var(--muted);line-height:1.5}
+    .data-note{
+      border:2px dashed #e8bfd0;background:#fffafb;border-radius:17px;padding:12px 13px;font-size:10px;color:var(--muted);line-height:1.6;margin-top:14px
+    }
+
+    /* 纯 Emoji 视觉：移除插画后保持首页紧凑 */
+    .hero{min-height:auto;padding:20px 18px 18px}
+    .hero h1{max-width:100%}
+    .hero p{max-width:100%}
+    .hero .sticker-row{position:static;margin-bottom:9px;font-size:18px}
+    .hero .speech{position:static;width:auto;display:inline-block;margin-top:13px;padding:8px 12px;border-radius:999px}
+    .hero .speech::after{display:none}
+    .hero-emoji-row{margin-top:15px;font-size:23px;letter-spacing:5px;line-height:1.5;word-break:break-word}
+    .plan-note{
+      background:linear-gradient(145deg,#fff3f8,#fff);border:2px solid var(--pink-line);border-radius:20px;
+      padding:13px 14px;margin:0 0 14px;box-shadow:0 7px 20px rgba(202,99,140,.06);font-size:11px;line-height:1.75;color:var(--ink)
+    }
+    .plan-note b{color:var(--berry)}
+    .plan-note-title{font-size:13px;font-weight:900;color:var(--pink-strong);margin-bottom:4px}
+    .recipe-suggestion{
+      display:flex;align-items:flex-start;gap:8px;margin:7px 2px 0;padding:8px 9px;border-radius:12px;
+      background:#fff8fb;border:1px dashed #efc5d5;color:var(--muted);font-size:10px;line-height:1.55;cursor:pointer
+    }
+    .recipe-suggestion input{margin:2px 0 0;accent-color:var(--pink-strong);flex:none}
+    .recipe-suggestion b{color:var(--berry)}
+    .recipe-text{color:var(--muted)}
+    .celebrate-overlay{
+      position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
+      background:rgba(91,70,80,.18);backdrop-filter:blur(4px);overflow:hidden
+    }
+    .celebrate-overlay.show{display:flex}
+    .celebrate-card{
+      position:relative;z-index:2;width:min(330px,88vw);background:#fff;border:2px solid var(--pink-line);border-radius:26px;
+      padding:20px 18px 16px;text-align:center;box-shadow:0 18px 50px rgba(192,94,131,.22);animation:popIn .22s ease-out
+    }
+    .celebrate-emoji{font-size:38px;line-height:1;margin-bottom:8px}
+    .celebrate-card h3{margin:0;color:var(--berry);font-size:19px}
+    .celebrate-card p{margin:7px 0 13px;color:var(--muted);font-size:11px;line-height:1.5}
+    .celebrate-cancel{border:2px solid var(--pink-line);background:#fff8fb;color:var(--berry);border-radius:999px;padding:8px 14px;font-size:11px;font-weight:800}
+    .confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .confetti-piece{position:absolute;top:-12vh;font-size:20px;animation:confettiFall .95s linear forwards;will-change:transform,opacity}
+    @keyframes popIn{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
+    @keyframes confettiFall{
+      0%{transform:translate3d(0,-8vh,0) rotate(0deg) scale(.8);opacity:0}
+      12%{opacity:1}
+      100%{transform:translate3d(var(--drift),112vh,0) rotate(var(--spin)) scale(1.05);opacity:0}
+    }
+
+    @media (min-width:430px){
+      .calendar{grid-template-columns:repeat(4,1fr)}
+      .cups{grid-template-columns:repeat(8,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <div class="brand">🎀 假期轻盈打卡</div>
+      <div class="pill">9.26 — 10.10 · 15 days</div>
+    </div>
+
+    <section id="homePage" class="page active">
+      <div class="hero">
+        <div class="sticker-row">♡ ✧ ☁︎ ☆</div>
+        <h1>15天假期<br>轻盈打卡</h1>
+        <p>不追求完美，只记录每天的饮食节奏。吃到七八分饱、补够水分，已经很棒。</p>
+        <div class="mini">🌸 粉色手帐感 · 温和版</div>
+
+        <div class="speech">新的一天，<br>加油噢！💗</div>
+        <div class="hero-emoji-row" aria-label="饮食与运动 Emoji">🥣 🥚 🥬 🍠 🍓 💧 🧘🏻‍♀️ ✨</div>
+      </div>
+
+      <div class="plan-note">
+        <div class="plan-note-title">🍽️ 15天饮食参考</div>
+        <div><b>热量：</b>1100‑1200大卡</div>
+        <div><b>替换：</b>红薯/南瓜/土豆互换；牛肉/虾滑互换；西红柿/青菜等量互换；晚餐不吃主食，饿极最多50g熟薯类</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b id="homeTodayPct">0%</b><small>今日完成</small></div>
+        <div class="stat"><b id="homeStreak">0</b><small>连续打卡</small></div>
+        <div class="stat"><b id="homeChecked">0/15</b><small>已打卡</small></div>
+      </div>
+
+      <div class="section-title"><h2>🎀 粉色打卡路线</h2><span>点日期进入当天</span></div>
+      <div class="route-wrap"><div id="route" class="route"></div></div>
+
+      <div class="section-title"><h2>🗓 15天总览</h2><span>盖章才算打卡</span></div>
+      <div id="calendar" class="calendar"></div>
+
+      <div class="data-note">
+        数据默认只保存在你当前这个浏览器里；每餐照片会压缩后保存在本机浏览器数据库中。清理浏览器数据可能会一起清除记录。
+      </div>
+    </section>
+
+    <section id="dailyPage" class="page">
+      <div class="daily-head">
+        <div class="date-switch">
+          <button id="prevDay" aria-label="上一天">‹</button>
+          <div class="date-title"><b id="dailyDate">9月26日</b><span id="dailySub">Day 1 / 15</span></div>
+          <button id="nextDay" aria-label="下一天">›</button>
+        </div>
+      </div>
+
+      <div class="score-card">
+        <div class="score-row">
+          <div class="score-copy"><b>今日完成度</b><p>6项核心任务；若记录暴食，温和扣 1 项分值。</p></div>
+          <div id="scoreNum" class="score-num">0%</div>
+        </div>
+        <div class="bar"><i id="scoreBar"></i></div>
+      </div>
+
+      <div class="card">
+        <h3>🍽 今天吃了什么</h3>
+
+        <div class="meal" data-meal="breakfast">
+          <div class="meal-top"><div class="meal-name">☀️ 早餐</div><button class="toggle satiety-btn">七八分饱</button></div>
+          <textarea class="meal-text" placeholder="记录一下早餐吃了什么…"></textarea>
+          <label class="recipe-suggestion"><input class="recipe-use" type="checkbox"><span><b>勾选填入推荐：</b><span class="recipe-text"></span></span></label>
+          <div class="photo-row">
+            <label class="photo-btn">📷 加照片<input class="photo-input" type="file" accept="image/*" capture="environment" hidden></label>
+            <img class="photo-preview" alt="早餐照片">
+            <button class="photo-remove">移除照片</button>
+          </div>
+        </div>
+
+        <div class="meal" data-meal="lunch">
+          <div class="meal-top"><div class="meal-name">🌤 午餐</div><button class="toggle satiety-btn">七八分饱</button></div>
+          <textarea class="meal-text" placeholder="记录一下午餐吃了什么…"></textarea>
+          <label class="recipe-suggestion"><input class="recipe-use" type="checkbox"><span><b>勾选填入推荐：</b><span class="recipe-text"></span></span></label>
+          <div class="photo-row">
+            <label class="photo-btn">📷 加照片<input class="photo-input" type="file" accept="image/*" capture="environment" hidden></label>
+            <img class="photo-preview" alt="午餐照片">
+            <button class="photo-remove">移除照片</button>
+          </div>
+        </div>
+
+        <div class="meal" data-meal="dinner">
+          <div class="meal-top"><div class="meal-name">🌙 晚餐</div><button class="toggle satiety-btn">七八分饱</button></div>
+          <textarea class="meal-text" placeholder="记录一下晚餐吃了什么…"></textarea>
+          <label class="recipe-suggestion"><input class="recipe-use" type="checkbox"><span><b>勾选填入推荐：</b><span class="recipe-text"></span></span></label>
+          <div class="photo-row">
+            <label class="photo-btn">📷 加照片<input class="photo-input" type="file" accept="image/*" capture="environment" hidden></label>
+            <img class="photo-preview" alt="晚餐照片">
+            <button class="photo-remove">移除照片</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🥬 今天的营养顺序</h3>
+        <div class="checks">
+          <button class="check" data-key="veg"><span class="emoji">🥬</span><b>蔬菜</b><small>至少 2 餐吃到</small></button>
+          <button class="check" data-key="protein"><span class="emoji">🍳</span><b>蛋白质</b><small>至少 2 餐吃到</small></button>
+          <button class="check" data-key="carb"><span class="emoji">🍚</span><b>主食</b><small>正常吃，不刻意断碳</small></button>
+          <button class="check" data-key="fruit"><span class="emoji">🍓</span><b>水果</b><small>至少 1 份</small></button>
+        </div>
+        <p class="tiny" style="margin:10px 2px 0">计分：蔬菜、蛋白质。主食和水果只做记录，不参与评分。</p>
+      </div>
+
+      <div class="card">
+        <h3>💧 喝水 1500ml</h3>
+        <div class="water-box">
+          <div id="waterRing" class="water-ring"><span><span id="waterMl">0</span><br><small>ml</small></span></div>
+          <div class="water-actions">
+            <button data-water="250">+250ml</button>
+            <button data-water="500">+500ml</button>
+            <button data-water="-250">-250ml</button>
+            <button data-water="reset">清零</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="pilatesCard" class="pilates">
+        <div class="left"><div class="pilates-icon">🧘🏻‍♀️</div><div><b>今天去普拉提了吗？</b><small>点一下点亮 · 不参与评分</small></div></div>
+        <div class="spark">✨</div>
+      </div>
+
+      <div class="card">
+        <h3>🍰 小记录，不做苛责</h3>
+        <div class="inline-row">
+          <label>今天没有零食 / 甜品</label>
+          <button id="noSnacksSwitch" class="switch" aria-label="无零食甜品"></button>
+        </div>
+        <div id="starNote" class="star-note">⭐ 今天获得一颗小星星！这只是奖励，不影响完成度。</div>
+
+        <div class="inline-row">
+          <label>今天有夜宵</label>
+          <button id="nightSnackSwitch" class="switch" aria-label="夜宵"></button>
+        </div>
+        <textarea id="snackText" placeholder="零食、甜品或夜宵吃了什么？可以简单记一下…" style="margin-top:10px"></textarea>
+
+        <div class="inline-row" style="margin-top:10px">
+          <label>今天有暴食</label>
+          <button id="bingeSwitch" class="switch" aria-label="暴食"></button>
+        </div>
+        <p class="tiny" style="margin:8px 2px 0">如果勾选“暴食”，今日完成度只扣 1 个核心项目（约 17%），不会把整天归零。</p>
+      </div>
+
+      <div id="privateWeightCard" class="card private-weight">
+        <h3>🔒 仅起点 / 终点记录</h3>
+        <div class="weight-row"><input id="weightInput" inputmode="decimal" type="number" step="0.1" placeholder="例如 55.6"><span>kg</span></div>
+        <p class="tiny" style="margin:8px 0 0">这项不会出现在首页，也不会进入总结。</p>
+      </div>
+
+      <button id="checkinBtn" class="checkin-btn">💗 完成今日打卡</button>
+    </section>
+
+    <section id="summaryPage" class="page">
+      <div class="card summary-hero">
+        <div class="big" id="summaryDays">0</div>
+        <p>已完成打卡天数 / 15</p>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-item"><b id="summaryAvg">0%</b><span>平均完成率</span></div>
+        <div class="summary-item"><b id="summaryNoBinge">0</b><span>无暴食天数</span></div>
+        <div class="summary-item"><b id="summaryPilates">0</b><span>普拉提次数</span></div>
+        <div class="summary-item"><b id="summaryWater">0</b><span>喝水达标天数</span></div>
+        <div class="summary-item"><b id="summaryStars">0 ⭐</b><span>小星星</span></div>
+        <div class="summary-item"><b id="summaryStreak">0</b><span>最长连续打卡</span></div>
+      </div>
+      <div id="summaryEmpty" class="empty-note">等你从 9月26日 开始留下第一枚粉色印章 🌷</div>
+      <div class="data-note">总结只统计已经点过“完成今日打卡”的日期；普拉提和小星星按实际点亮记录。</div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="homePage"><span>🏠</span>首页</button>
+    <button class="nav-btn" data-page="dailyPage"><span>🎀</span>打卡</button>
+    <button class="nav-btn" data-page="summaryPage"><span>🌷</span>总结</button>
+  </nav>
+  <div id="celebrateOverlay" class="celebrate-overlay" role="dialog" aria-modal="true" aria-labelledby="celebrateTitle">
+    <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+    <div class="celebrate-card">
+      <div class="celebrate-emoji">🎉✨</div>
+      <h3 id="celebrateTitle">今日打卡完成！</h3>
+      <p id="celebrateText">做得好，1秒后自动进入明天 💗</p>
+      <button id="cancelAutoNext" class="celebrate-cancel" type="button">取消跳转</button>
+    </div>
+  </div>
+  <div id="toast" class="toast">已保存</div>
+
+<script>
+(() => {
+  const dates = [
+    "2026-09-26","2026-09-27","2026-09-28","2026-09-29","2026-09-30",
+    "2026-10-01","2026-10-02","2026-10-03","2026-10-04","2026-10-05",
+    "2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-10"
+  ];
+  const recipes = {
+    "2026-09-26": {breakfast:"燕麦45g+水煮蛋2个", lunch:"瘦牛肉100g+青菜220g+蒸红薯130g", dinner:"西红柿鸡蛋汤（蛋1个+西红柿250g）"},
+    "2026-09-27": {breakfast:"燕麦45g+水煮蛋1个", lunch:"虾滑100g+青菜220g+蒸南瓜140g", dinner:"水煮蛋2个+青菜200g"},
+    "2026-09-28": {breakfast:"燕麦45g+水煮蛋2个", lunch:"瘦牛肉100g+熟土豆130g+青菜200g", dinner:"虾滑80g+西红柿250g"},
+    "2026-09-29": {breakfast:"燕麦45g+水煮蛋1个", lunch:"瘦牛肉100g+青菜230g+蒸红薯120g", dinner:"鸡蛋炒西红柿（蛋1个+西红柿220g）"},
+    "2026-09-30": {breakfast:"燕麦45g+水煮蛋2个", lunch:"虾滑100g+青菜220g+蒸土豆140g", dinner:"水煮蛋2个+青菜200g"},
+    "2026-10-01": {breakfast:"燕麦45g+水煮蛋1个", lunch:"瘦牛肉100g+西红柿+青菜200g+蒸南瓜130g", dinner:"虾滑80g+青菜220g"},
+    "2026-10-02": {breakfast:"燕麦45g+水煮蛋2个", lunch:"鸡蛋2个炒青菜+蒸红薯130g", dinner:"瘦牛肉80g+西红柿250g"},
+    "2026-10-03": {breakfast:"燕麦45g+水煮蛋2个", lunch:"瘦牛肉100g+青菜220g+蒸红薯130g", dinner:"西红柿鸡蛋汤（蛋1个+西红柿250g）"},
+    "2026-10-04": {breakfast:"燕麦45g+水煮蛋1个", lunch:"虾滑100g+青菜220g+蒸南瓜140g", dinner:"水煮蛋2个+青菜200g"},
+    "2026-10-05": {breakfast:"燕麦45g+水煮蛋2个", lunch:"瘦牛肉100g+熟土豆130g+青菜200g", dinner:"虾滑80g+西红柿250g"},
+    "2026-10-06": {breakfast:"燕麦45g+水煮蛋1个", lunch:"瘦牛肉100g+青菜230g+蒸红薯120g", dinner:"鸡蛋炒西红柿（蛋1个+西红柿220g）"},
+    "2026-10-07": {breakfast:"燕麦45g+水煮蛋2个", lunch:"虾滑100g+青菜220g+蒸土豆140g", dinner:"水煮蛋2个+青菜200g"},
+    "2026-10-08": {breakfast:"燕麦45g+水煮蛋1个", lunch:"瘦牛肉100g+西红柿+青菜200g+蒸南瓜130g", dinner:"虾滑80g+青菜220g"},
+    "2026-10-09": {breakfast:"燕麦45g+水煮蛋2个", lunch:"鸡蛋2个炒青菜+蒸红薯130g", dinner:"瘦牛肉80g+西红柿250g"},
+    "2026-10-10": {breakfast:"燕麦45g+水煮蛋1个", lunch:"瘦牛肉100g+青菜220g+蒸土豆130g", dinner:"虾滑80g+西红柿200g"}
+  };
+
+  const STORE_KEY = "holidayFit2026_v2";
+  let state = loadState();
+  let currentDate = chooseInitialDate();
+  let photoDB = null;
+  const objectURLs = {};
+
+  function blankDay(){
+    return {
+      checkedIn:false,
+      meals:{
+        breakfast:{text:"",satiety:false,recipeUsed:false},
+        lunch:{text:"",satiety:false,recipeUsed:false},
+        dinner:{text:"",satiety:false,recipeUsed:false}
+      },
+      nutrition:{veg:false,protein:false,carb:false,fruit:false},
+      water:0,
+      pilates:false,
+      noSnacks:false,
+      nightSnack:false,
+      snackText:"",
+      binge:false,
+      weight:""
+    };
+  }
+
+  function loadState(){
+    try{
+      const parsed = JSON.parse(localStorage.getItem(STORE_KEY) || "{}");
+      const obj = {};
+      dates.forEach(d => {
+        const base = blankDay();
+        const old = parsed[d] || {};
+        obj[d] = {
+          ...base,
+          ...old,
+          meals:{
+            breakfast:{...base.meals.breakfast,...(old.meals?.breakfast||{})},
+            lunch:{...base.meals.lunch,...(old.meals?.lunch||{})},
+            dinner:{...base.meals.dinner,...(old.meals?.dinner||{})}
+          },
+          nutrition:{...base.nutrition,...(old.nutrition||{})}
+        };
+      });
+      return obj;
+    }catch(e){
+      const obj={}; dates.forEach(d=>obj[d]=blankDay()); return obj;
+    }
+  }
+
+  function saveState(show=false){
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    refreshAll();
+    if(show) toast("已保存 ♡");
+  }
+
+  function chooseInitialDate(){
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth()+1).padStart(2,"0");
+    const d = String(now.getDate()).padStart(2,"0");
+    const local = `${y}-${m}-${d}`;
+    return dates.includes(local) ? local : dates[0];
+  }
+
+  function fmtDate(date){
+    const [y,m,d] = date.split("-").map(Number);
+    return `${m}月${d}日`;
+  }
+
+  function shortDate(date){
+    const [,m,d] = date.split("-").map(Number);
+    return `${m}.${String(d).padStart(2,"0")}`;
+  }
+
+  function scoreFor(date){
+    const x=state[date];
+    let count=0;
+    if(x.meals.breakfast.satiety) count++;
+    if(x.meals.lunch.satiety) count++;
+    if(x.meals.dinner.satiety) count++;
+    if(x.nutrition.veg) count++;
+    if(x.nutrition.protein) count++;
+    if((x.water||0)>=1500) count++;
+    if(x.binge) count=Math.max(0,count-1);
+    return Math.round(count/6*100);
+  }
+
+  function longestStreak(){
+    let best=0,cur=0;
+    dates.forEach(d=>{
+      if(state[d].checkedIn){cur++;best=Math.max(best,cur)} else cur=0;
+    });
+    return best;
+  }
+
+  function renderHome(){
+    const route = document.getElementById("route");
+    route.innerHTML="";
+    dates.forEach((d,i)=>{
+      const wrap=document.createElement("div");
+      wrap.className="route-node";
+      const dot=document.createElement("button");
+      dot.className="route-dot"+(state[d].checkedIn?" done":"")+(d===currentDate?" active":"");
+      dot.textContent = state[d].checkedIn ? "✓" : (i+1);
+      dot.dataset.d=shortDate(d);
+      dot.addEventListener("click",()=>{currentDate=d;showPage("dailyPage");renderDaily();});
+      wrap.appendChild(dot);
+      if(i<dates.length-1){
+        const line=document.createElement("div"); line.className="route-line"; wrap.appendChild(line);
+      }
+      route.appendChild(wrap);
+    });
+
+    const cal=document.getElementById("calendar");
+    cal.innerHTML="";
+    dates.forEach((d)=>{
+      const b=document.createElement("button");
+      b.className="day-card";
+      const pct=scoreFor(d);
+      b.innerHTML=`<div class="date">${shortDate(d)}</div>
+        <div class="pct">${pct}%</div>
+        <div class="status">${state[d].checkedIn?"已盖章":"未打卡"}</div>
+        <div class="stamp">${state[d].checkedIn?"🎀":""}</div>`;
+      b.addEventListener("click",()=>{currentDate=d;showPage("dailyPage");renderDaily();});
+      cal.appendChild(b);
+    });
+
+    const today = chooseInitialDate();
+    document.getElementById("homeTodayPct").textContent = `${scoreFor(today)}%`;
+    const checked=dates.filter(d=>state[d].checkedIn).length;
+    document.getElementById("homeChecked").textContent=`${checked}/15`;
+    document.getElementById("homeStreak").textContent=longestStreak();
+  }
+
+  function renderDaily(){
+    const idx=dates.indexOf(currentDate);
+    const x=state[currentDate];
+    document.getElementById("dailyDate").textContent=fmtDate(currentDate);
+    document.getElementById("dailySub").textContent=`Day ${idx+1} / 15`;
+    document.getElementById("prevDay").disabled=idx===0;
+    document.getElementById("nextDay").disabled=idx===dates.length-1;
+
+    const pct=scoreFor(currentDate);
+    document.getElementById("scoreNum").textContent=`${pct}%`;
+    document.getElementById("scoreBar").style.width=`${pct}%`;
+
+    document.querySelectorAll(".meal").forEach(el=>{
+      const k=el.dataset.meal;
+      el.querySelector(".meal-text").value=x.meals[k].text||"";
+      el.querySelector(".satiety-btn").classList.toggle("on",!!x.meals[k].satiety);
+      const recipe = recipes[currentDate]?.[k] || "";
+      el.querySelector(".recipe-text").textContent = recipe;
+      el.querySelector(".recipe-use").checked = !!x.meals[k].recipeUsed;
+      loadPhotoPreview(currentDate,k,el);
+    });
+
+    document.querySelectorAll(".check").forEach(btn=>{
+      btn.classList.toggle("on",!!x.nutrition[btn.dataset.key]);
+    });
+
+    document.getElementById("waterMl").textContent=x.water||0;
+    const deg=Math.min(360,((x.water||0)/1500)*360);
+    document.getElementById("waterRing").style.background=`conic-gradient(var(--pink) ${deg}deg,#f8e0e9 0deg)`;
+
+    document.getElementById("pilatesCard").classList.toggle("on",!!x.pilates);
+    document.getElementById("noSnacksSwitch").classList.toggle("on",!!x.noSnacks);
+    document.getElementById("nightSnackSwitch").classList.toggle("on",!!x.nightSnack);
+    document.getElementById("bingeSwitch").classList.toggle("on",!!x.binge);
+    document.getElementById("starNote").classList.toggle("show",!!x.noSnacks);
+    document.getElementById("snackText").value=x.snackText||"";
+
+    const wCard=document.getElementById("privateWeightCard");
+    const showWeight=currentDate===dates[0] || currentDate===dates[dates.length-1];
+    wCard.classList.toggle("show",showWeight);
+    document.getElementById("weightInput").value=x.weight||"";
+
+    const cb=document.getElementById("checkinBtn");
+    cb.classList.toggle("done",!!x.checkedIn);
+    cb.textContent=x.checkedIn ? "✓ 今日已打卡 · 点此撤销" : "💗 完成今日打卡";
+  }
+
+  function renderSummary(){
+    const checkedDates=dates.filter(d=>state[d].checkedIn);
+    const n=checkedDates.length;
+    document.getElementById("summaryDays").textContent=n;
+    const avg=n?Math.round(checkedDates.reduce((s,d)=>s+scoreFor(d),0)/n):0;
+    document.getElementById("summaryAvg").textContent=`${avg}%`;
+    document.getElementById("summaryNoBinge").textContent=checkedDates.filter(d=>!state[d].binge).length;
+    document.getElementById("summaryPilates").textContent=dates.filter(d=>state[d].pilates).length;
+    document.getElementById("summaryWater").textContent=dates.filter(d=>(state[d].water||0)>=1500).length;
+    document.getElementById("summaryStars").textContent=`${dates.filter(d=>state[d].noSnacks).length} ⭐`;
+    document.getElementById("summaryStreak").textContent=longestStreak();
+    document.getElementById("summaryEmpty").style.display=n?"none":"block";
+  }
+
+  function refreshAll(){
+    renderHome();
+    renderDaily();
+    renderSummary();
+  }
+
+  function showPage(id){
+    document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+    document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+    if(id==="summaryPage")renderSummary();
+    if(id==="homePage")renderHome();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.page)));
+  document.getElementById("prevDay").addEventListener("click",()=>{
+    const i=dates.indexOf(currentDate); if(i>0){currentDate=dates[i-1];renderDaily();renderHome();}
+  });
+  document.getElementById("nextDay").addEventListener("click",()=>{
+    const i=dates.indexOf(currentDate); if(i<dates.length-1){currentDate=dates[i+1];renderDaily();renderHome();}
+  });
+
+  document.querySelectorAll(".meal").forEach(el=>{
+    const k=el.dataset.meal;
+    el.querySelector(".satiety-btn").addEventListener("click",()=>{
+      state[currentDate].meals[k].satiety=!state[currentDate].meals[k].satiety; saveState();
+    });
+    el.querySelector(".meal-text").addEventListener("input",e=>{
+      state[currentDate].meals[k].text=e.target.value; localStorage.setItem(STORE_KEY,JSON.stringify(state));
+    });
+    el.querySelector(".meal-text").addEventListener("change",()=>saveState());
+    el.querySelector(".recipe-use").addEventListener("change",e=>{
+      const checked=e.target.checked;
+      state[currentDate].meals[k].recipeUsed=checked;
+      if(checked){
+        const recipe=recipes[currentDate]?.[k]||"";
+        const ta=el.querySelector(".meal-text");
+        const current=ta.value||"";
+        if(recipe && !current.includes(recipe)){
+          const next=current.trim() ? `${current.replace(/\s+$/,"")}\n${recipe}` : recipe;
+          ta.value=next;
+          state[currentDate].meals[k].text=next;
+        }
+        toast("推荐食谱已填入，可继续补充 ♡");
+      }
+      saveState();
+    });
+    el.querySelector(".photo-input").addEventListener("change",async e=>{
+      const f=e.target.files?.[0]; if(!f)return;
+      try{
+        const blob=await compressImage(f,1000,.78);
+        await savePhoto(currentDate,k,blob);
+        await loadPhotoPreview(currentDate,k,el);
+        toast("照片已保存在本机 ♡");
+      }catch(err){toast("照片保存失败，请换一张试试");}
+      e.target.value="";
+    });
+    el.querySelector(".photo-remove").addEventListener("click",async()=>{
+      await deletePhoto(currentDate,k); await loadPhotoPreview(currentDate,k,el); toast("照片已移除");
+    });
+  });
+
+  document.querySelectorAll(".check").forEach(btn=>btn.addEventListener("click",()=>{
+    const k=btn.dataset.key; state[currentDate].nutrition[k]=!state[currentDate].nutrition[k]; saveState();
+  }));
+
+  document.querySelectorAll("[data-water]").forEach(btn=>btn.addEventListener("click",()=>{
+    const v=btn.dataset.water;
+    if(v==="reset")state[currentDate].water=0;
+    else state[currentDate].water=Math.max(0,(state[currentDate].water||0)+Number(v));
+    saveState();
+  }));
+
+  document.getElementById("pilatesCard").addEventListener("click",()=>{
+    state[currentDate].pilates=!state[currentDate].pilates; saveState();
+  });
+  document.getElementById("noSnacksSwitch").addEventListener("click",()=>{
+    state[currentDate].noSnacks=!state[currentDate].noSnacks; saveState();
+  });
+  document.getElementById("nightSnackSwitch").addEventListener("click",()=>{
+    state[currentDate].nightSnack=!state[currentDate].nightSnack; saveState();
+  });
+  document.getElementById("bingeSwitch").addEventListener("click",()=>{
+    state[currentDate].binge=!state[currentDate].binge; saveState();
+  });
+  document.getElementById("snackText").addEventListener("input",e=>{
+    state[currentDate].snackText=e.target.value; localStorage.setItem(STORE_KEY,JSON.stringify(state));
+  });
+  document.getElementById("snackText").addEventListener("change",()=>saveState());
+  document.getElementById("weightInput").addEventListener("input",e=>{
+    state[currentDate].weight=e.target.value; localStorage.setItem(STORE_KEY,JSON.stringify(state));
+  });
+
+  let autoNextTimer=null;
+
+  function clearConfetti(){
+    const layer=document.getElementById("confettiLayer");
+    layer.innerHTML="";
+  }
+
+  function throwConfetti(){
+    const layer=document.getElementById("confettiLayer");
+    clearConfetti();
+    const icons=["🎉","✨","🌸","💗","🎀","⭐","🌷"];
+    for(let i=0;i<32;i++){
+      const piece=document.createElement("span");
+      piece.className="confetti-piece";
+      piece.textContent=icons[i%icons.length];
+      piece.style.left=`${Math.random()*100}%`;
+      piece.style.setProperty("--drift",`${Math.round((Math.random()-.5)*180)}px`);
+      piece.style.setProperty("--spin",`${Math.round((Math.random()-.5)*900)}deg`);
+      piece.style.animationDelay=`${Math.random()*.16}s`;
+      piece.style.fontSize=`${15+Math.round(Math.random()*12)}px`;
+      layer.appendChild(piece);
+    }
+  }
+
+  function closeCelebration(){
+    clearTimeout(autoNextTimer);
+    autoNextTimer=null;
+    document.getElementById("celebrateOverlay").classList.remove("show");
+    clearConfetti();
+  }
+
+  function celebrateAndAdvance(){
+    const idx=dates.indexOf(currentDate);
+    const isLast=idx===dates.length-1;
+    document.getElementById("celebrateTitle").textContent=isLast?"15天打卡完成！":"今日打卡完成！";
+    document.getElementById("celebrateText").textContent=isLast?"太棒啦，1秒后进入总结页 ✨":"做得好，1秒后自动进入明天 💗";
+    document.getElementById("celebrateOverlay").classList.add("show");
+    throwConfetti();
+
+    clearTimeout(autoNextTimer);
+    autoNextTimer=setTimeout(()=>{
+      document.getElementById("celebrateOverlay").classList.remove("show");
+      clearConfetti();
+      autoNextTimer=null;
+      if(isLast){
+        showPage("summaryPage");
+        renderSummary();
+      }else{
+        currentDate=dates[idx+1];
+        showPage("dailyPage");
+        renderDaily();
+      }
+    },1000);
+  }
+
+  document.getElementById("cancelAutoNext").addEventListener("click",()=>{
+    if(autoNextTimer){
+      closeCelebration();
+      toast("已取消自动跳转，会停留在今天");
+    }
+  });
+
+  document.getElementById("checkinBtn").addEventListener("click",()=>{
+    const wasChecked = !!state[currentDate].checkedIn;
+    state[currentDate].checkedIn = !wasChecked;
+    saveState(false);
+
+    if(wasChecked){
+      toast("已撤销今日打卡");
+      return;
+    }
+
+    celebrateAndAdvance();
+  });
+
+  function toast(msg){
+    const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+    clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove("show"),1500);
+  }
+
+  function openPhotoDB(){
+    return new Promise((resolve,reject)=>{
+      const req=indexedDB.open("holidayFitPhotos2026",1);
+      req.onupgradeneeded=()=>req.result.createObjectStore("photos");
+      req.onsuccess=()=>resolve(req.result);
+      req.onerror=()=>reject(req.error);
+    });
+  }
+
+  async function db(){
+    if(!photoDB) photoDB=await openPhotoDB();
+    return photoDB;
+  }
+
+  async function savePhoto(date,meal,blob){
+    const d=await db();
+    return new Promise((resolve,reject)=>{
+      const tx=d.transaction("photos","readwrite");
+      tx.objectStore("photos").put(blob,`${date}-${meal}`);
+      tx.oncomplete=resolve; tx.onerror=()=>reject(tx.error);
+    });
+  }
+
+  async function getPhoto(date,meal){
+    const d=await db();
+    return new Promise((resolve,reject)=>{
+      const tx=d.transaction("photos","readonly");
+      const req=tx.objectStore("photos").get(`${date}-${meal}`);
+      req.onsuccess=()=>resolve(req.result||null); req.onerror=()=>reject(req.error);
+    });
+  }
+
+  async function deletePhoto(date,meal){
+    const d=await db();
+    return new Promise((resolve,reject)=>{
+      const tx=d.transaction("photos","readwrite");
+      tx.objectStore("photos").delete(`${date}-${meal}`);
+      tx.oncomplete=resolve; tx.onerror=()=>reject(tx.error);
+    });
+  }
+
+  async function loadPhotoPreview(date,meal,mealEl){
+    const img=mealEl.querySelector(".photo-preview");
+    const rm=mealEl.querySelector(".photo-remove");
+    const key=`${date}-${meal}`;
+    try{
+      const blob=await getPhoto(date,meal);
+      if(objectURLs[key]){URL.revokeObjectURL(objectURLs[key]);delete objectURLs[key];}
+      if(blob){
+        const url=URL.createObjectURL(blob); objectURLs[key]=url; img.src=url; img.style.display="block"; rm.style.display="inline-block";
+      }else{
+        img.removeAttribute("src"); img.style.display="none"; rm.style.display="none";
+      }
+    }catch(e){
+      img.style.display="none"; rm.style.display="none";
+    }
+  }
+
+  function compressImage(file,maxSide=1000,quality=.78){
+    return new Promise((resolve,reject)=>{
+      const img=new Image();
+      const url=URL.createObjectURL(file);
+      img.onload=()=>{
+        let w=img.naturalWidth,h=img.naturalHeight;
+        const scale=Math.min(1,maxSide/Math.max(w,h)); w=Math.round(w*scale); h=Math.round(h*scale);
+        const c=document.createElement("canvas"); c.width=w;c.height=h;
+        c.getContext("2d").drawImage(img,0,0,w,h);
+        c.toBlob(blob=>{URL.revokeObjectURL(url); blob?resolve(blob):reject(new Error("compress"));},"image/jpeg",quality);
+      };
+      img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error("image"));};
+      img.src=url;
+    });
+  }
+
+  refreshAll();
+})();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"45c2bf8136a245cd97f1c2e9a96c0730","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
